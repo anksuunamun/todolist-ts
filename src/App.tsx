@@ -14,13 +14,13 @@ export type TaskType = {
 
 export type FilterValuesType = 'all' | 'active' | 'completed'
 
-type TodoListType = {
+export type TodoListType = {
     id: string
     title: string
     filter: FilterValuesType
 }
 
-type TaskStateType = {
+export type TaskStateType = {
     [todoListID: string]: Array<TaskType>
 }
 
@@ -45,32 +45,14 @@ function App() {
             {title: 'Meat', isDone: true, id: v1()},],
     })
 
-
-    // let [tasks1, setTasks] = useState<Array<TaskType>>([
-    //     {title: 'HTML and CSS', isDone: true, id: v1()},
-    //     {title: 'JS', isDone: true, id: v1()},
-    //     {title: 'ReactJS', isDone: false, id: v1()},
-    //     {title: 'ReactJS', isDone: true, id: v1()},
-    // ])
-
-    // const [filter, setFilter] = useState<FilterValuesType>('all')
-
     let [error, setError] = useState<string | null>(null)
 
-
+    //functions for Tasks
     function removeTask(taskId: string, todoListID: string) {
         const todoListTasks = tasks[todoListID]
         tasks[todoListID] = todoListTasks.filter(task => task.id !== taskId)
         setTasks({...tasks})
 
-    }
-
-    function changeFilter(newFilterValue: FilterValuesType, todoListID: string) {
-        const todoList = todoLists.find(list => list.id === todoListID);
-        if (todoList) {
-            todoList.filter = newFilterValue;
-            setTodolists([...todoLists])
-        }
     }
 
     function addTask(text: string, todoListID: string) {
@@ -106,7 +88,7 @@ function App() {
     // if (filter === 'completed') {
     //     tasksForTodoList = tasks1.filter(t => t.isDone)
     // }
-
+//functions for TodoLists
     function addTodoList(title: string) {
         const newTodoListID = v1();
         const newTodoList: TodoListType = {
@@ -131,6 +113,14 @@ function App() {
         const todoList = todoLists.find(tl => tl.id === todoListID)
         if (todoList) {
             todoList.title = title
+            setTodolists([...todoLists])
+        }
+    }
+
+    function changeFilter(newFilterValue: FilterValuesType, todoListID: string) {
+        const todoList = todoLists.find(list => list.id === todoListID);
+        if (todoList) {
+            todoList.filter = newFilterValue;
             setTodolists([...todoLists])
         }
     }
@@ -166,8 +156,8 @@ function App() {
                             }
                             return (
                                 <Grid item
-                                      key={todoList.id} >
-                                    <Paper elevation={10} style={{padding: "15px"}}>
+                                      key={todoList.id}>
+                                    <Paper elevation={10} style={{padding: '15px'}}>
                                         <Todolist
                                             title={todoList.title}
                                             tasks={tasksForTodoList}
