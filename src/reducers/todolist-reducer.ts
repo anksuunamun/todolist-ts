@@ -26,6 +26,36 @@ export type ActionType =
     | ChangeTodoListTitleActionType
     | ChangeFilterActionType
 
+export const RemoveTodoListAC = (todolistId: string): RemoveTodoListActionType => {
+    return {
+        type: 'REMOVE_TODOLIST',
+        id: todolistId
+    }
+}
+
+export const AddTodoListAC = (todolistTitle: string): AddTodoListActionType => {
+    return {
+        type: 'ADD_TODOLIST',
+        title: todolistTitle
+    }
+}
+
+export const ChangeTodoListTitleAC = (todolistTitle: string, todolistId: string): ChangeTodoListTitleActionType => {
+    return {
+        type: 'CHANGE_TODOLIST_TITLE',
+        title: todolistTitle,
+        id: todolistId,
+    }
+}
+
+export const ChangeFilterAC = (todolistId: string, filterValue: FilterValuesType): ChangeFilterActionType => {
+    return {
+        type: 'CHANGE_FILTER',
+        value: filterValue,
+        id: todolistId,
+    }
+}
+
 export function todoListReducer(state: Array<TodoListType>, action: ActionType) {
     switch (action.type) {
         case 'REMOVE_TODOLIST': {
@@ -46,7 +76,14 @@ export function todoListReducer(state: Array<TodoListType>, action: ActionType) 
                 todoList.title = action.title
                 return [...state]
             }
-            return state
+            // return state.map(tl => {
+            //     if (tl.id === action.id) {
+            //         return {...tl, title: action.title}
+            //     } else {
+            //         return tl;
+            //     }
+            // })
+            return state;
         }
         case 'CHANGE_FILTER': {
             // const todoList = state.find(list => list.id === action.id);
@@ -54,16 +91,13 @@ export function todoListReducer(state: Array<TodoListType>, action: ActionType) 
             //     todoList.filter = action.value;
             //     return [...state]
             // } else return state
-            state.map(tl => {
+            return state.map(tl => {
                 if (tl.id === action.id) {
                     return {...tl, filter: action.value}
                 } else {
-                    return state
+                    return tl
                 }
             })
-            return state;
-
-
         }
         default: {
             return state;
