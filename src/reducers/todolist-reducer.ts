@@ -20,7 +20,7 @@ type ChangeFilterActionType = {
     id: string
 }
 
-type ActionType =
+export type ActionType =
     RemoveTodoListActionType
     | AddTodoListActionType
     | ChangeTodoListTitleActionType
@@ -49,11 +49,21 @@ export function todoListReducer(state: Array<TodoListType>, action: ActionType) 
             return state
         }
         case 'CHANGE_FILTER': {
-            const todoList = state.find(list => list.id === action.id);
-            if (todoList) {
-                todoList.filter = action.value;
-                return [...state]
-            } else return state
+            // const todoList = state.find(list => list.id === action.id);
+            // if (todoList) {
+            //     todoList.filter = action.value;
+            //     return [...state]
+            // } else return state
+            state.map(tl => {
+                if (tl.id === action.id) {
+                    return {...tl, filter: action.value}
+                } else {
+                    return state
+                }
+            })
+            return state;
+
+
         }
         default: {
             return state;
