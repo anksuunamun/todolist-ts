@@ -4,7 +4,7 @@ import {AddBox} from '@material-ui/icons';
 import {TextField} from '@material-ui/core';
 
 
-type AddItemFormPropsType = {
+export type AddItemFormPropsType = {
     addItem: (title: string) => void
     error: string | null
     setError: (error: string | null) => void
