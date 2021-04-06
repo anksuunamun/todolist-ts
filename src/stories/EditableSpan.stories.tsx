@@ -9,7 +9,14 @@ export default {
     title: 'Components/EditableSpan',
     component: EditableSpan,
     argTypes: {
-        title: {defaultValue: 'React'}
+        title: {
+            defaultValue: 'React',
+            description: 'Item title'
+        },
+        changeItem: {
+            description: 'Item was changed'
+        },
+
     },
 } as Meta;
 
