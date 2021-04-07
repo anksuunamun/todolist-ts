@@ -15,14 +15,14 @@ export type TodolistType = {
     order: number
 }
 
-enum TaskStatuses {
+export enum TaskStatuses {
     New = 0,
     InProgress = 1,
     Completed = 2,
     Draft = 3
 }
 
-enum TaskPriorities {
+export enum TaskPriorities {
     Low = 0,
     Middle = 1,
     High = 2,
