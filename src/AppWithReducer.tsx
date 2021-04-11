@@ -13,7 +13,14 @@ import {
     RemoveTodoListAC, TodolistDomainType,
     todoListReducer
 } from './reducers/todolist-reducer';
-import {addTaskAC, changeTaskStatusAC, changeTaskTitleAC, removeTaskAC, tasksReducer} from './reducers/tasks-reducer';
+import {
+    addTaskAC,
+    changeTaskStatusAC,
+    changeTaskTitleAC,
+    removeTaskAC,
+    tasksReducer,
+    updateTaskStatusTC
+} from './reducers/tasks-reducer';
 import {TaskPriorities, TaskStatuses, TodolistType} from './data-access-layer/api';
 
 // export type TaskType = {
@@ -103,14 +110,14 @@ function AppWithReducer() {
 
     const addTask = useCallback(function (text: string, todoListID: string) {
         if (text.trim() !== '') {
-            dispatchToTasks(addTaskAC(text, todoListID))
+            // dispatchToTasks(addTaskAC(text, todoListID))
         } else {
             setError('Title is required')
         }
     }, [])
 
     const changeTaskStatus = useCallback(function (id: string, status: TaskStatuses, todoListID: string) {
-        dispatchToTasks(changeTaskStatusAC(id, status, todoListID))
+        // dispatchToTasks(updateTaskStatusTC(id, status, todoListID))
     }, [])
 
     const removeTodoList = useCallback(function (todoListID: string) {
@@ -128,9 +135,9 @@ function AppWithReducer() {
     // }
 //functions for TodoLists
     const addTodoList = useCallback(function (title: string) {
-        const action = AddTodoListAC(title)
-        dispatchToTodolists(action)
-        dispatchToTasks(action)
+        // const action = AddTodoListAC(title)
+        // dispatchToTodolists(action)
+        // dispatchToTasks(action)
     }, [])
 
     const changeTaskTitle = useCallback(function (id: string, title: string, todoListID: string) {

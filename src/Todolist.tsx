@@ -1,4 +1,4 @@
-import React, {useCallback} from 'react';
+import React, {useCallback, useEffect} from 'react';
 import AddItemForm from './AddItemForm';
 import EditableSpan from './EditableSpan';
 import {Button} from '@material-ui/core';
@@ -7,6 +7,8 @@ import IconButton from '@material-ui/core/IconButton';
 import {Task} from './Task';
 import {TaskStatuses, TaskType} from './data-access-layer/api';
 import {FilterValuesType} from './reducers/todolist-reducer';
+import {getTasksTC} from './reducers/tasks-reducer';
+import {useDispatch} from 'react-redux';
 
 type PropsType = {
     title: string,
@@ -25,6 +27,12 @@ type PropsType = {
 }
 
 export const Todolist = React.memo(function (props: PropsType) {
+
+    const dispatch = useDispatch();
+    useEffect(() => {
+        dispatch(getTasksTC(props.id))
+    }, [])
+
     console.log('Todolist render')
 
     let tasksForTodoList = props.tasks;

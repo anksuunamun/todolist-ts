@@ -43,7 +43,7 @@ export type TaskType = {
     addedDate: null | string
 }
 
-type UpdateTaskBodyType = {
+export type UpdateTaskBodyType = {
     title: string
     description: null | string
     status: TaskStatuses
@@ -67,7 +67,7 @@ type CommonResponseType<T> = {
 export const todolistsAPI = {
     getTodolists() {
         return instance.get<Array<TodolistType>>('/todo-lists')
-            .then(response => response)
+            .then(response => response.data)
     },
     createTodolist(title: string) {
         return instance.post<CommonResponseType<{ item: TodolistType }>>('/todo-lists', {title})
@@ -77,19 +77,19 @@ export const todolistsAPI = {
         return instance.delete<CommonResponseType<{}>>(`/todo-lists/${todolistId}`)
             .then(response => response)
     },
-    updateTodolist(todolistId: string) {
-        return instance.put<CommonResponseType<{}>>(`/todo-lists/${todolistId}`)
+    updateTodolist(todolistId: string, title: string) {
+        return instance.put<CommonResponseType<{}>>(`/todo-lists/${todolistId}`, {title})
             .then(response => response)
     }
 }
 
 export const tasksAPI = {
-    getTasks(todolistId: string, taskId: string, count: number, page: number) {
-        return instance.get<GetTasksResponseType>(`/todo-lists/${todolistId}/tasks?count=${count}&page=${page}`)
+    getTasks(todolistId: string) {
+        return instance.get<GetTasksResponseType>(`/todo-lists/${todolistId}/tasks`)
             .then(response => response.data.items)
     },
     createTask(title: string, todolistId: string) {
-        return instance.post<CommonResponseType<{ item: TaskType }>>(`/todo-lists/${todolistId}/tasks`)
+        return instance.post<CommonResponseType<{ item: TaskType }>>(`/todo-lists/${todolistId}/tasks`, {title})
             .then(response => response.data.data.item)
     },
     updateTask(todolistId: string, taskId: string, data: UpdateTaskBodyType) {
@@ -98,6 +98,6 @@ export const tasksAPI = {
     },
     deleteTask(todolistId: string, taskId: string) {
         return instance.delete<CommonResponseType<{}>>(`/todo-lists/${todolistId}/tasks/${taskId}`)
-            .then(response => response)
+            .then(response => response.data)
     }
 }
