@@ -19,48 +19,34 @@ export type TasksActionsType =
     | SetTodolistsActionType
     | SetTasksActionType
 
-export const removeTaskAC = (taskId: string, todoListId: string) => {
-    return {
-        type: 'REMOVE_TASK' as const,
-        todolistId: todoListId,
-        taskId: taskId,
-    }
-}
+export const removeTaskAC = (taskId: string, todoListId: string) => ({
+    type: 'REMOVE_TASK' as const,
+    todolistId: todoListId,
+    taskId: taskId,
+})
 
-export const addTaskAC = (task: TaskType) => {
-    return {
-        type: 'ADD_TASK' as const,
-        task
-    }
-}
+export const addTaskAC = (task: TaskType) => ({type: 'ADD_TASK' as const, task})
 
-export const changeTaskStatusAC = (id: string, status: TaskStatuses, todoListID: string) => {
-    return {
-        type: 'CHANGE_TASK_STATUS' as const,
-        id, status, todoListID
-    }
-}
+export const changeTaskStatusAC = (id: string, status: TaskStatuses, todoListID: string) => ({
+    type: 'CHANGE_TASK_STATUS' as const,
+    id, status, todoListID
+})
 
-export const changeTaskTitleAC = (id: string, title: string, todolistId: string) => {
-    return {
-        type: 'CHANGE_TASK_TITLE' as const,
-        id, title, todolistId
-    }
-}
+export const changeTaskTitleAC = (id: string, title: string, todolistId: string) => ({
+    type: 'CHANGE_TASK_TITLE' as const,
+    id, title, todolistId
+})
 
-export const setTasksAC = (todolistId: string, tasks: Array<TaskType>) => {
-    return {
-        type: 'SET_TASKS' as const,
-        todolistId,
-        tasks
-    }
-}
+export const setTasksAC = (todolistId: string, tasks: Array<TaskType>) => ({
+    type: 'SET_TASKS' as const,
+    todolistId,
+    tasks
+})
 
 export const getTasksTC = (todolistId: string): AppThunk => async (dispatch: Dispatch<TasksActionsType>) => {
     let response = await tasksAPI.getTasks(todolistId)
     dispatch(setTasksAC(todolistId, response))
 }
-
 
 export const deleteTaskTC = (todolistId: string, taskId: string): AppThunk => async (dispatch: Dispatch<TasksActionsType>) => {
     let response = await tasksAPI.deleteTask(todolistId, taskId)
@@ -73,7 +59,6 @@ export const createTaskTC = (title: string, todolistId: string): AppThunk => asy
     let response = await tasksAPI.createTask(title, todolistId)
     dispatch(addTaskAC(response));
 }
-
 
 export const updateTaskStatusTC = (todolistId: string, taskId: string, status: TaskStatuses): AppThunk => async (dispatch: Dispatch<TasksActionsType>, getState: () => AppRootStateType) => {
     let taskForUpdate = getState().tasks[todolistId].find(task => task.id === taskId)
@@ -90,7 +75,6 @@ export const updateTaskStatusTC = (todolistId: string, taskId: string, status: T
         dispatch(changeTaskStatusAC(taskId, status, todolistId))
     }
 }
-
 
 export const updateTaskTitleTC = (todolistId: string, taskId: string, title: string): AppThunk => {
     return (dispatch: Dispatch<TasksActionsType>, getState: () => AppRootStateType) => {
