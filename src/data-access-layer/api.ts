@@ -8,6 +8,7 @@ const instance = axios.create({
     }
 })
 
+//types
 export type TodolistType = {
     id: string
     title: string
@@ -64,6 +65,7 @@ type CommonResponseType<T> = {
     resultCode: number
 }
 
+//api
 export const todolistsAPI = {
     getTodolists() {
         return instance.get<Array<TodolistType>>('/todo-lists')

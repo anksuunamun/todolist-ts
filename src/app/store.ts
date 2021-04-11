@@ -1,6 +1,6 @@
-import {TasksActionsType, tasksReducer} from './tasks-reducer';
+import {TasksActionsType, tasksReducer} from '../features/Todolists/tasks-reducer';
 import {applyMiddleware, combineReducers, createStore} from 'redux';
-import {TodolistActionsType, todoListReducer} from './todolist-reducer';
+import {TodolistActionsType, todoListReducer} from '../features/Todolists/todolist-reducer';
 import thunk, {ThunkAction} from 'redux-thunk';
 
 // объединяя reducer-ы с помощью combineReducers,

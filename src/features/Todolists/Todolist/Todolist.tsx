@@ -1,13 +1,13 @@
 import React, {useCallback, useEffect} from 'react';
-import AddItemForm from './AddItemForm';
-import EditableSpan from './EditableSpan';
+import AddItemForm from '../../../components/AddItemFrom/AddItemForm';
+import EditableSpan from '../../../components/EditableSpan/EditableSpan';
 import {Button} from '@material-ui/core';
 import DeleteIcon from '@material-ui/icons/Delete';
 import IconButton from '@material-ui/core/IconButton';
-import {Task} from './Task';
-import {TaskStatuses, TaskType} from './data-access-layer/api';
-import {FilterValuesType} from './reducers/todolist-reducer';
-import {getTasksTC} from './reducers/tasks-reducer';
+import {Task} from './Task/Task';
+import {TaskStatuses, TaskType} from '../../../data-access-layer/api';
+import {FilterValuesType} from '../todolist-reducer';
+import {getTasksTC} from '../tasks-reducer';
 import {useDispatch} from 'react-redux';
 
 type PropsType = {

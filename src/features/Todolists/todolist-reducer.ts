@@ -1,6 +1,6 @@
-import {todolistsAPI, TodolistType} from '../data-access-layer/api';
+import {todolistsAPI, TodolistType} from '../../data-access-layer/api';
 import {Dispatch} from 'redux';
-import {AppThunk} from './store';
+import {AppThunk} from '../../app/store';
 
 export type FilterValuesType = 'all' | 'active' | 'completed'
 
@@ -19,6 +19,7 @@ export type TodolistActionsType =
     | ChangeFilterActionType
     | SetTodolistsActionType
 
+//actions
 export const RemoveTodoListAC = (todolistId: string) => ({type: 'REMOVE_TODOLIST' as const, id: todolistId})
 
 export const AddTodoListAC = (todolist: TodolistType) => ({type: 'ADD_TODOLIST' as const, todolist})
@@ -37,6 +38,7 @@ export const ChangeFilterAC = (todolistId: string, filterValue: FilterValuesType
 
 export const setTodolistsAC = (todolists: Array<TodolistType>) => ({type: 'SET_TODOLISTS' as const, todolists})
 
+//thunks
 export const getTodolistsTC = (): AppThunk => async (dispatch: Dispatch<TodolistActionsType>) => {
     let response = await todolistsAPI.getTodolists()
     dispatch(setTodolistsAC(response))
@@ -68,21 +70,10 @@ export function todoListReducer(state: Array<TodolistDomainType> = initialState,
             return [{...action.todolist, filter: 'all'}, ...state]
         }
         case 'CHANGE_TODOLIST_TITLE' : {
-            const todoList = state.find(tl => tl.id === action.id)
-            if (todoList) {
-                todoList.title = action.title
-                return [...state]
-            }
-            return state;
+            return state.map(tl => tl.id === action.id ? {...tl, title: action.title} : tl)
         }
         case 'CHANGE_FILTER': {
-            return state.map(tl => {
-                if (tl.id === action.id) {
-                    return {...tl, filter: action.value}
-                } else {
-                    return tl
-                }
-            })
+            return state.map(tl => tl.id === action.id ? {...tl, filter: action.value} : tl)
         }
         case 'SET_TODOLISTS': {
             return action.todolists.map(tl => ({...tl, filter: 'all'}))

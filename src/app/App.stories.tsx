@@ -3,21 +3,21 @@ import React from 'react';
 import {Story, Meta} from '@storybook/react/types-6-0';
 
 import {action} from '@storybook/addon-actions';
-import AppWithRedux from '../AppWithRedux';
-import {ReduxStoreProviderDecorator} from './decorators/ReduxStoreProviderDecorator';
+import App from './App';
+import {ReduxStoreProviderDecorator} from '../stories/decorators/ReduxStoreProviderDecorator';
 
 export default {
-    title: 'Components/AppWithRedux',
-    component: AppWithRedux,
+    title: 'Components/App',
+    component: App,
     argTypes: {},
     decorators: [ReduxStoreProviderDecorator]
 } as Meta;
 
-const Template: Story = (args) => <AppWithRedux {...args} />;
+const Template: Story = (args) => <App {...args} />;
 
-export const AppWithReduxExample = Template.bind({});
+export const AppExample = Template.bind({});
 
-AppWithReduxExample.args = {
+AppExample.args = {
     addItem: action('Add item clicked.')
 };
 

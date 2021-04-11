@@ -15,7 +15,7 @@ describe('addItemForm', () => {
         expect(image).toMatchImageSnapshot();
     })
 
-    it('AppWithRedux should be visually correct', async () => {
+    it('App should be visually correct', async () => {
         await page.goto('http://localhost:9009/iframe.html?id=components-appwithredux--app-with-redux-example&viewMode=story');
         const image = await page.screenshot();
 
