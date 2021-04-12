@@ -52,6 +52,16 @@ export type UpdateTaskBodyType = {
     startDate: null | string
     deadline: null | string
 }
+
+export type UpdateDomainTaskBodyType = {
+    title?: string
+    description?: null | string
+    status?: TaskStatuses
+    priority?: TaskPriorities
+    startDate?: null | string
+    deadline?: null | string
+}
+
 type GetTasksResponseType = {
     items: Array<TaskType>
     totalCount: number,

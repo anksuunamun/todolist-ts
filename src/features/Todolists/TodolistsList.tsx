@@ -10,7 +10,7 @@ import {
 } from './todolist-reducer';
 import {useDispatch, useSelector} from 'react-redux';
 import {AppRootStateType} from '../../app/store';
-import {createTaskTC, deleteTaskTC, updateTaskStatusTC, updateTaskTitleTC} from './tasks-reducer';
+import {createTaskTC, deleteTaskTC, updateTaskTC} from './tasks-reducer';
 import {TaskStatuses} from '../../data-access-layer/api';
 import {Grid, Paper} from '@material-ui/core';
 import AddItemForm from '../../components/AddItemFrom/AddItemForm';
@@ -41,7 +41,7 @@ export const TodolistsList: React.FC<TodolistsListPropsType> = (props) => {
     }, [dispatch])
 
     const changeTaskStatus = useCallback(function (id: string, status: TaskStatuses, todoListID: string) {
-        dispatch(updateTaskStatusTC(todoListID, id, status))
+        dispatch(updateTaskTC(todoListID, id, {status}))
     }, [dispatch])
 
     const removeTodoList = useCallback(function (todoListID: string) {
@@ -63,7 +63,7 @@ export const TodolistsList: React.FC<TodolistsListPropsType> = (props) => {
     }, [dispatch])
 
     const changeTaskTitle = useCallback(function (id: string, title: string, todoListID: string) {
-        dispatch(updateTaskTitleTC(todoListID, id, title))
+        dispatch(updateTaskTC(todoListID, id, {title}))
     }, [dispatch])
 
     const changeTodoListTitle = useCallback(function (title: string, todoListID: string) {
