@@ -15,10 +15,10 @@ const rootReducer = combineReducers({
 })
 
 const initialGlobalState = {
-    app: {status: 'idle'},
+    app: {status: 'idle', error: null},
     todolists: [
         {
-            id:'todoListID1', title: 'What to learn', filter: 'all', addedDate: '',
+            id: 'todoListID1', title: 'What to learn', filter: 'all', addedDate: '',
             order: 0,
         },
         {

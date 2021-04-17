@@ -1,7 +1,7 @@
 import {todolistsAPI, TodolistType} from '../../data-access-layer/api';
 import {Dispatch} from 'redux';
 import {AppThunk} from '../../app/store';
-import {SetStatusActionType, setStatusLoadingAC} from '../../app/app-reducer';
+import {SetStatusActionType, setStatusAC} from '../../app/app-reducer';
 
 export type FilterValuesType = 'all' | 'active' | 'completed'
 
@@ -41,31 +41,31 @@ export const setTodolistsAC = (todolists: Array<TodolistType>) => ({type: 'SET_T
 
 //thunks
 export const getTodolistsTC = (): AppThunk => async (dispatch: Dispatch<TodolistActionsType>) => {
-    dispatch(setStatusLoadingAC('loading'));
+    dispatch(setStatusAC('loading'));
     let response = await todolistsAPI.getTodolists()
     dispatch(setTodolistsAC(response))
-    dispatch(setStatusLoadingAC('succeeded'));
+    dispatch(setStatusAC('succeeded'));
 }
 
 export const createTodolistTC = (title: string): AppThunk => async (dispatch: Dispatch<TodolistActionsType>) => {
-    dispatch(setStatusLoadingAC('loading'));
+    dispatch(setStatusAC('loading'));
     let response = await todolistsAPI.createTodolist(title)
     dispatch(AddTodoListAC(response))
-    dispatch(setStatusLoadingAC('succeeded'));
+    dispatch(setStatusAC('succeeded'));
 }
 
 export const deleteTodolistTC = (todolistId: string): AppThunk => async (dispatch: Dispatch<TodolistActionsType>) => {
-    dispatch(setStatusLoadingAC('loading'));
+    dispatch(setStatusAC('loading'));
     let response = await todolistsAPI.deleteTodolist(todolistId)
     dispatch(RemoveTodoListAC(todolistId))
-    dispatch(setStatusLoadingAC('succeeded'));
+    dispatch(setStatusAC('succeeded'));
 }
 
 export const changeTodolistTitleTC = (title: string, todolistId: string): AppThunk => async (dispatch: Dispatch<TodolistActionsType>) => {
-    dispatch(setStatusLoadingAC('loading'));
+    dispatch(setStatusAC('loading'));
     let response = await todolistsAPI.updateTodolist(todolistId, title)
     dispatch(ChangeTodoListTitleAC(title, todolistId))
-    dispatch(setStatusLoadingAC('succeeded'));
+    dispatch(setStatusAC('succeeded'));
 }
 
 const initialState: Array<TodolistDomainType> = []
