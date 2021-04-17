@@ -4,13 +4,18 @@ import {AppBar, Button, Container, IconButton, Toolbar, Typography} from '@mater
 import {Menu} from '@material-ui/icons';
 import {TaskType} from '../data-access-layer/api';
 import {TodolistsList} from '../features/Todolists/TodolistsList';
-
+import LinearProgress from '@material-ui/core/LinearProgress';
+import {useSelector} from 'react-redux';
+import {AppRootStateType} from './store';
+import {RequestStatusType} from './app-reducer';
 
 export type TaskStateType = {
     [todoListID: string]: Array<TaskType>
 }
 
 function App() {
+
+    const status = useSelector<AppRootStateType, RequestStatusType>(state => state.app.status)
 
     console.log('App render')
     // const todoListID1 = v1()
@@ -31,9 +36,9 @@ function App() {
     //         {title: 'Meat', isDone: true, id: v1()},],
     // })
 
+
     return (
         <div className="App">
-
             <AppBar position="static">
                 <Toolbar>
                     <IconButton edge="start" color="inherit" aria-label="menu">
@@ -45,7 +50,7 @@ function App() {
                     <Button color="inherit">Login</Button>
                 </Toolbar>
             </AppBar>
-
+            {status === 'loading' && <LinearProgress color="secondary"/>}
             <Container fixed>
                 <TodolistsList/>
             </Container>
