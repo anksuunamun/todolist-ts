@@ -6,13 +6,16 @@ import {todoListReducer} from '../../features/Todolists/todolist-reducer';
 import {tasksReducer} from '../../features/Todolists/tasks-reducer';
 import {AppRootStateType} from '../../app/store';
 import {TaskPriorities, TaskStatuses} from '../../data-access-layer/api';
+import {appReducer} from '../../app/app-reducer';
 
 const rootReducer = combineReducers({
     tasks: tasksReducer,
-    todolists: todoListReducer
+    todolists: todoListReducer,
+    app: appReducer
 })
 
 const initialGlobalState = {
+    app: {status: 'idle'},
     todolists: [
         {
             id:'todoListID1', title: 'What to learn', filter: 'all', addedDate: '',
