@@ -68,7 +68,7 @@ type GetTasksResponseType = {
     error: null | string
 }
 
-type CommonResponseType<T> = {
+export type CommonResponseType<T> = {
     data: T
     messages: Array<string>
     fieldsErrors: Array<string>,
@@ -83,15 +83,15 @@ export const todolistsAPI = {
     },
     createTodolist(title: string) {
         return instance.post<CommonResponseType<{ item: TodolistType }>>('/todo-lists', {title})
-            .then(response => response.data.data.item)
+            .then(response => response.data)
     },
     deleteTodolist(todolistId: string) {
         return instance.delete<CommonResponseType<{}>>(`/todo-lists/${todolistId}`)
-            .then(response => response)
+            .then(response => response.data)
     },
     updateTodolist(todolistId: string, title: string) {
         return instance.put<CommonResponseType<{}>>(`/todo-lists/${todolistId}`, {title})
-            .then(response => response)
+            .then(response => response.data)
     }
 }
 
@@ -102,11 +102,11 @@ export const tasksAPI = {
     },
     createTask(title: string, todolistId: string) {
         return instance.post<CommonResponseType<{ item: TaskType }>>(`/todo-lists/${todolistId}/tasks`, {title})
-            .then(response => response.data.data.item)
+            .then(response => response.data)
     },
     updateTask(todolistId: string, taskId: string, data: UpdateTaskBodyType) {
         return instance.put<CommonResponseType<{ item: TaskType }>>(`/todo-lists/${todolistId}/tasks/${taskId}`, {...data})
-            .then(response => response.data.data.item)
+            .then(response => response.data)
     },
     deleteTask(todolistId: string, taskId: string) {
         return instance.delete<CommonResponseType<{}>>(`/todo-lists/${todolistId}/tasks/${taskId}`)
