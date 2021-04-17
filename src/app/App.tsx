@@ -8,6 +8,7 @@ import LinearProgress from '@material-ui/core/LinearProgress';
 import {useSelector} from 'react-redux';
 import {AppRootStateType} from './store';
 import {RequestStatusType} from './app-reducer';
+import ErrorSnackbar from '../components/ErrorSnackbar/ErrorSnackbar';
 
 export type TaskStateType = {
     [todoListID: string]: Array<TaskType>
@@ -16,7 +17,6 @@ export type TaskStateType = {
 function App() {
 
     const status = useSelector<AppRootStateType, RequestStatusType>(state => state.app.status)
-
     console.log('App render')
     // const todoListID1 = v1()
     // const todoListID2 = v1()
@@ -54,6 +54,7 @@ function App() {
             <Container fixed>
                 <TodolistsList/>
             </Container>
+            <ErrorSnackbar/>
         </div>
     );
 }
