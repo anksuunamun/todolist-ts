@@ -8,6 +8,7 @@ export type AddItemFormPropsType = {
     addItem: (title: string) => void
     error: string | null
     setError: (error: string | null) => void
+    disabled ?: boolean
 }
 
 const AddItemForm = React.memo(function (props: AddItemFormPropsType) {
@@ -40,12 +41,13 @@ const AddItemForm = React.memo(function (props: AddItemFormPropsType) {
                 helperText={!!props.error ? 'Title is required' : ''}
                 label={'Title'}
                 error={!!props.error}
+                disabled={props.disabled}
             />
             {/*<input value={title}*/}
             {/*       onKeyPress={onKeyPressHandler}*/}
             {/*       onChange={onChangeHandler}*/}
             {/*       className={props.error ? 'error' : undefined}/>*/}
-            <IconButton onClick={() => {
+            <IconButton disabled={props.disabled} onClick={() => {
                 addTask()
             }}>
                 <AddBox/>

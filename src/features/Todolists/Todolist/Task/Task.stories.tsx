@@ -31,6 +31,7 @@ TaskIsDoneExample.args = {
         title: 'HTML and CSS', id: v1(), description: '',
         todoListId: 'todolistId1', order: 0, status: TaskStatuses.New,
         priority: TaskPriorities.Low, startDate: '', deadline: '', addedDate: '',
+        entityStatus: 'idle'
     },
     todolistId: 'todolistId1'
 };
@@ -43,7 +44,7 @@ TaskIsNotDoneExample.args = {
     task: {
         title: 'HTML and CSS', id: v1(), description: '',
         todoListId: 'todolistId1', order: 0, status: TaskStatuses.New,
-        priority: TaskPriorities.Low, startDate: '', deadline: '', addedDate: '',
+        priority: TaskPriorities.Low, startDate: '', deadline: '', addedDate: '',entityStatus: 'idle'
     },
     todolistId: 'todolistId1'
 };

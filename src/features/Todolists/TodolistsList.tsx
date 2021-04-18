@@ -10,12 +10,12 @@ import {
 } from './todolist-reducer';
 import {useDispatch, useSelector} from 'react-redux';
 import {AppRootStateType} from '../../app/store';
-import {createTaskTC, deleteTaskTC, updateTaskTC} from './tasks-reducer';
+import {createTaskTC, deleteTaskTC, TaskStateType, updateTaskTC} from './tasks-reducer';
 import {TaskStatuses} from '../../data-access-layer/api';
 import {Grid, Paper} from '@material-ui/core';
 import AddItemForm from '../../components/AddItemFrom/AddItemForm';
 import {Todolist} from './Todolist/Todolist';
-import {TaskStateType} from '../../app/App';
+
 
 type TodolistsListPropsType = {}
 export const TodolistsList: React.FC<TodolistsListPropsType> = (props) => {
@@ -97,6 +97,7 @@ export const TodolistsList: React.FC<TodolistsListPropsType> = (props) => {
                                     setError={setError}
                                     filter={todoList.filter}
                                     id={todoList.id}
+                                    entityStatus={todoList.entityStatus}
                                     removeTodoList={removeTodoList}
                                     changeTaskTitle={changeTaskTitle}
                                     changeTodoListTitle={changeTodoListTitle}/>

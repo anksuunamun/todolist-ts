@@ -7,12 +7,13 @@ import IconButton from '@material-ui/core/IconButton';
 import {Task} from './Task/Task';
 import {TaskStatuses, TaskType} from '../../../data-access-layer/api';
 import {FilterValuesType} from '../todolist-reducer';
-import {getTasksTC} from '../tasks-reducer';
+import {getTasksTC, TaskDomainType} from '../tasks-reducer';
 import {useDispatch} from 'react-redux';
+import {RequestStatusType} from '../../../app/app-reducer';
 
 type PropsType = {
     title: string,
-    tasks: Array<TaskType>
+    tasks: Array<TaskDomainType>
     changeFilter: (newFilterValue: FilterValuesType, todoListID: string) => void
     addTask: (text: string, todoListID: string) => void
     changeTaskStatus: (id: string, status: TaskStatuses, todoListID: string) => void
@@ -24,10 +25,10 @@ type PropsType = {
     removeTodoList: (todoListID: string) => void
     changeTaskTitle: (id: string, title: string, todoListID: string) => void
     changeTodoListTitle: (title: string, todoListID: string) => void
+    entityStatus: RequestStatusType
 }
 
 export const Todolist = React.memo(function (props: PropsType) {
-
     const dispatch = useDispatch();
     useEffect(() => {
         dispatch(getTasksTC(props.id))
@@ -56,6 +57,7 @@ export const Todolist = React.memo(function (props: PropsType) {
                       todolistId={props.id}
                       task={task}
                       changeTaskTitle={props.changeTaskTitle}
+                      entityStatus={task.entityStatus}
         />
     )
     // const [title, setTitle] = useState<string>(' ')
@@ -95,15 +97,19 @@ export const Todolist = React.memo(function (props: PropsType) {
             <h3>
                 {/*{props.title}*/}
                 <EditableSpan title={props.title}
-                              changeItem={changeTodoListTitle}/>
-                <IconButton onClick={() => props.removeTodoList(props.id)}>
+                              changeItem={changeTodoListTitle}
+                              disabled={props.entityStatus === 'loading'}
+                />
+                <IconButton onClick={() => props.removeTodoList(props.id)}
+                            disabled={props.entityStatus === 'loading'}>
                     <DeleteIcon/>
                 </IconButton>
             </h3>
 
             <AddItemForm addItem={addTask}
                          error={props.error}
-                         setError={props.setError}/>
+                         setError={props.setError}
+                         disabled={props.entityStatus === 'loading'}/>
             {/*<div>*/}
             {/*    <input value={title} onKeyPress={onKeyPressHandler} onChange={onChangeHandler}*/}
             {/*           className={props.error ? 'error' : undefined}/>*/}

@@ -10,9 +10,9 @@ import {AppRootStateType} from './store';
 import {RequestStatusType} from './app-reducer';
 import ErrorSnackbar from '../components/ErrorSnackbar/ErrorSnackbar';
 
-export type TaskStateType = {
-    [todoListID: string]: Array<TaskType>
-}
+// export type TaskStateType = {
+//     [todoListID: string]: Array<TaskType>
+// }
 
 function App() {
 
