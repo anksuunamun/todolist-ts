@@ -10,6 +10,7 @@ import {
     Typography
 } from '@material-ui/core';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
+import {useFormik} from 'formik';
 
 function Copyright() {
     return (
@@ -45,8 +46,41 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
+type FormikErrorType = {
+    email?: string
+    password?: string
+    rememberMe?: boolean
+}
+
 const Login: React.FC<any> = () => {
     const classes = useStyles();
+
+    const formik = useFormik({
+        initialValues: {
+            email: '',
+            password: '',
+            rememberMe: false,
+        },
+        onSubmit: values => {
+            console.log(JSON.stringify(values))
+            formik.resetForm();
+        },
+        validate: (values => {
+            const errors: FormikErrorType = {};
+            if (!values.email) {
+                errors.email = 'Required'
+            } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
+                errors.email = 'Invalid email address'
+            }
+            if (!values.password) {
+                errors.password = 'Required'
+            } else if (values.password.length < 5) {
+                errors.password = 'Must be 5 characters or more'
+            }
+
+            return errors;
+        })
+    })
 
     return (
         <Container component="main" maxWidth="xs">
@@ -58,7 +92,7 @@ const Login: React.FC<any> = () => {
                 <Typography component="h1" variant="h5">
                     Sign in
                 </Typography>
-                <form className={classes.form} noValidate>
+                <form className={classes.form} noValidate onSubmit={formik.handleSubmit}>
                     <TextField
                         variant="outlined"
                         margin="normal"
@@ -66,23 +100,29 @@ const Login: React.FC<any> = () => {
                         fullWidth
                         id="email"
                         label="Email Address"
-                        name="email"
                         autoComplete="email"
                         autoFocus
+                        {...formik.getFieldProps('email')}
                     />
+                    {formik.touched.email && formik.errors.email ?
+                        <div style={{color: 'red'}}>{formik.errors.email}</div> : ''}
                     <TextField
                         variant="outlined"
                         margin="normal"
                         required
                         fullWidth
-                        name="password"
                         label="Password"
                         type="password"
                         id="password"
                         autoComplete="current-password"
+                        {...formik.getFieldProps('password')}
                     />
+                    {formik.touched.password && formik.errors.password ?
+                        <div style={{color: 'red'}}>{formik.errors.password}</div> : ''}
                     <FormControlLabel
-                        control={<Checkbox value="remember" color="primary"/>}
+                        control={<Checkbox checked={formik.values.rememberMe}
+                                           {...formik.getFieldProps('rememberMe')}
+                                           color="primary"/>}
                         label="Remember me"
                     />
                     <Button
