@@ -2,7 +2,6 @@ import React from 'react';
 import './App.css';
 import {AppBar, Button, Container, IconButton, Toolbar, Typography} from '@material-ui/core';
 import {Menu} from '@material-ui/icons';
-import {TaskType} from '../data-access-layer/api';
 import {TodolistsList} from '../features/Todolists/TodolistsList';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import {useSelector} from 'react-redux';
@@ -17,7 +16,6 @@ import ErrorSnackbar from '../components/ErrorSnackbar/ErrorSnackbar';
 function App() {
 
     const status = useSelector<AppRootStateType, RequestStatusType>(state => state.app.status)
-    console.log('App render')
     // const todoListID1 = v1()
     // const todoListID2 = v1()
     // const [todoLists, dispatchToTodolists] = useReducer(todoListReducer, [

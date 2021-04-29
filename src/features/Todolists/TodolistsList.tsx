@@ -19,13 +19,14 @@ import {Todolist} from './Todolist/Todolist';
 
 type TodolistsListPropsType = {}
 export const TodolistsList: React.FC<TodolistsListPropsType> = (props) => {
+    let dispatch = useDispatch();
     useEffect(() => {
         dispatch(getTodolistsTC());
-    }, [])
+    }, [dispatch])
     let todoLists = useSelector<AppRootStateType, Array<TodolistDomainType>>(state => state.todolists)
     let tasks = useSelector<AppRootStateType, TaskStateType>(state => state.tasks)
 
-    let dispatch = useDispatch();
+
     let [error, setError] = useState<string | null>(null)
 
     const removeTask = useCallback(function (taskId: string, todoListID: string) {

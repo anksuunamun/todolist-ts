@@ -3,7 +3,7 @@ import {Checkbox} from '@material-ui/core';
 import EditableSpan from '../../../../components/EditableSpan/EditableSpan';
 import IconButton from '@material-ui/core/IconButton';
 import DeleteIcon from '@material-ui/icons/Delete';
-import {TaskStatuses, TaskType} from '../../../../data-access-layer/api';
+import {TaskStatuses} from '../../../../data-access-layer/api';
 import {RequestStatusType} from '../../../../app/app-reducer';
 import {TaskDomainType} from '../../tasks-reducer';
 
@@ -16,7 +16,6 @@ export type TaskPropsType = {
     entityStatus: RequestStatusType
 }
 export const Task = React.memo((props: TaskPropsType) => {
-    console.log('Task render')
 
     const onClickHandler = () => {
         props.removeTask(props.task.id, props.todolistId)
