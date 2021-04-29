@@ -8,6 +8,8 @@ import {useSelector} from 'react-redux';
 import {AppRootStateType} from './store';
 import {RequestStatusType} from './app-reducer';
 import ErrorSnackbar from '../components/ErrorSnackbar/ErrorSnackbar';
+import Login from '../features/Login/Login';
+import {Route, Switch, Redirect} from 'react-router-dom';
 
 // export type TaskStateType = {
 //     [todoListID: string]: Array<TaskType>
@@ -50,7 +52,12 @@ function App() {
             </AppBar>
             {status === 'loading' && <LinearProgress color="secondary"/>}
             <Container fixed>
-                <TodolistsList/>
+                <Switch>
+                    <Route exact path={'/'} render={() => <TodolistsList/>}/>
+                    <Route path={'/login'} render={() => <Login/>}/>
+                    <Route path={'/404'} render={() => <div>Error</div>}/>
+                    <Redirect from={'*'} to={'/404'}/>
+                </Switch>
             </Container>
             <ErrorSnackbar/>
         </div>
