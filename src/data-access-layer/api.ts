@@ -75,6 +75,19 @@ export type CommonResponseType<T> = {
     resultCode: number
 }
 
+type AuthResponseDataType = {
+    id: number
+    email: string
+    login: string
+}
+
+type LoginParamsType = {
+    email: string
+    password: string
+    rememberMe: boolean
+    captcha?: string
+}
+
 //api
 export const todolistsAPI = {
     getTodolists() {
@@ -111,5 +124,20 @@ export const tasksAPI = {
     deleteTask(todolistId: string, taskId: string) {
         return instance.delete<CommonResponseType<{}>>(`/todo-lists/${todolistId}/tasks/${taskId}`)
             .then(response => response.data)
+    }
+}
+
+export const authAPI = {
+    authMe() {
+        return instance.get<CommonResponseType<AuthResponseDataType>>('/auth/me')
+            .then(response => response)
+    },
+    logIn(data: LoginParamsType) {
+        return instance.post<CommonResponseType<{ userId: number }>>('/auth/login', data)
+            .then(response => response)
+    },
+    logOut() {
+        return instance.delete<CommonResponseType<{}>>('/auth/login')
+            .then(response => response)
     }
 }
