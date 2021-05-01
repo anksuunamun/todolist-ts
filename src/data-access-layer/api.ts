@@ -81,7 +81,7 @@ type AuthResponseDataType = {
     login: string
 }
 
-type LoginParamsType = {
+export type LoginParamsType = {
     email: string
     password: string
     rememberMe: boolean
@@ -130,14 +130,14 @@ export const tasksAPI = {
 export const authAPI = {
     authMe() {
         return instance.get<CommonResponseType<AuthResponseDataType>>('/auth/me')
-            .then(response => response)
+            .then(response => response.data)
     },
     logIn(data: LoginParamsType) {
         return instance.post<CommonResponseType<{ userId: number }>>('/auth/login', data)
-            .then(response => response)
+            .then(response => response.data)
     },
     logOut() {
         return instance.delete<CommonResponseType<{}>>('/auth/login')
-            .then(response => response)
+            .then(response => response.data)
     }
 }
