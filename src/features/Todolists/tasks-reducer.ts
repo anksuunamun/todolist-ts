@@ -169,7 +169,7 @@ export function tasksReducer(state: TaskStateType = initialState, action: TasksA
         case 'SET_TODOLISTS': {
             let newState = {...state}
             action.todolists.forEach(tl => {
-                newState[tl.id] = []
+                !newState[tl.id] && (newState[tl.id] = [])
             })
             return newState;
         }
