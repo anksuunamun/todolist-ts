@@ -11,6 +11,10 @@ import {
 } from '@material-ui/core';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import {useFormik} from 'formik';
+import {useDispatch, useSelector} from 'react-redux';
+import {logInTC} from './auth-reducer';
+import {Redirect} from 'react-router-dom';
+import {AppRootStateType} from '../../app/store';
 
 function Copyright() {
     return (
@@ -54,6 +58,8 @@ type FormikErrorType = {
 
 const Login: React.FC<any> = () => {
     const classes = useStyles();
+    const dispatch = useDispatch();
+    const isLoggedIn = useSelector<AppRootStateType, boolean>(state => state.auth.isLoggedIn);
 
     const formik = useFormik({
         initialValues: {
@@ -62,7 +68,7 @@ const Login: React.FC<any> = () => {
             rememberMe: false,
         },
         onSubmit: values => {
-            console.log(JSON.stringify(values))
+            dispatch(logInTC(values));
             formik.resetForm();
         },
         validate: (values => {
@@ -82,6 +88,9 @@ const Login: React.FC<any> = () => {
         })
     })
 
+    if (isLoggedIn) {
+        return <Redirect to={'/'}/>
+    }
     return (
         <Container component="main" maxWidth="xs">
             <CssBaseline/>
