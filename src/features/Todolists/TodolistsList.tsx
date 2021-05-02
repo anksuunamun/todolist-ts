@@ -75,7 +75,7 @@ export const TodolistsList: React.FC<TodolistsListPropsType> = (props) => {
     }, [dispatch])
 
     const changeFilter = useCallback(function (newFilterValue: FilterValuesType, todoListID: string) {
-        dispatch(ChangeFilterAC(todoListID, newFilterValue))
+        dispatch(ChangeFilterAC({todolistId: todoListID, filterValue: newFilterValue}))
     }, [dispatch])
 
     if (!isLoggedIn) {
