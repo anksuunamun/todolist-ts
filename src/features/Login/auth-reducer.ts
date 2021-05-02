@@ -8,14 +8,15 @@ import {
 import {Dispatch} from 'redux';
 import {authAPI, LoginParamsType} from '../../data-access-layer/api';
 import {handleNetworkError, handleServerAppError} from '../../utils/error-utils';
+import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 
 const initialState = {
     isLoggedIn: false
 }
 
-export const setIsLoggedIn = (isLoggedIn: boolean) => ({
-    type: 'login/SET_IS_LOGGED_IN', isLoggedIn
-} as const)
+// export const setIsLoggedIn = (isLoggedIn: boolean) => ({
+//     type: 'login/SET_IS_LOGGED_IN', isLoggedIn
+// } as const)
 
 export const logInTC = (data: LoginParamsType) => (dispatch: Dispatch<AuthReducerActionsType>) => {
     dispatch(setStatusAC('loading'))
@@ -23,7 +24,7 @@ export const logInTC = (data: LoginParamsType) => (dispatch: Dispatch<AuthReduce
         .then(
             response => {
                 if (response.resultCode === 0) {
-                    dispatch(setIsLoggedIn(true))
+                    dispatch(setIsLoggedIn({isLoggedIn: true}))
                     dispatch(setStatusAC('succeeded'))
                 } else {
                     handleServerAppError(response, dispatch)
@@ -38,7 +39,7 @@ export const logOutTC = () => (dispatch: Dispatch<AuthReducerActionsType>) => {
     authAPI.logOut().then(
         response => {
             if (response.resultCode === 0) {
-                dispatch(setIsLoggedIn(false))
+                dispatch(setIsLoggedIn({isLoggedIn: false}))
                 dispatch(setStatusAC('succeeded'))
             } else {
                 handleServerAppError(response, dispatch)
@@ -53,7 +54,7 @@ export const appInitTC = () => (dispatch: Dispatch<AuthReducerActionsType>) => {
         .then(response => {
                 if (response.resultCode === 0) {
                     dispatch(setStatusAC('succeeded'))
-                    dispatch(setIsLoggedIn(true))
+                    dispatch(setIsLoggedIn({isLoggedIn: true}))
                 } else {
                     handleServerAppError(response, dispatch)
                 }
@@ -70,12 +71,25 @@ type AuthReducerActionsType = SetIsLoggedInActionType
     | SetStatusActionType
     | SetAppInitializedActionType
 
-export const authReducer = (state = initialState, action: AuthReducerActionsType): typeof initialState => {
-    switch (action.type) {
-        case 'login/SET_IS_LOGGED_IN': {
-            return {...state, isLoggedIn: action.isLoggedIn}
+// export const authReducer = (state = initialState, action: AuthReducerActionsType): typeof initialState => {
+//     switch (action.type) {
+//         case 'login/SET_IS_LOGGED_IN': {
+//             return {...state, isLoggedIn: action.isLoggedIn}
+//         }
+//         default:
+//             return state
+//     }
+// }
+
+const authSlice = createSlice({
+    name: 'auth',
+    initialState,
+    reducers: {
+        setIsLoggedIn: (state, action: PayloadAction<{ isLoggedIn: boolean }>) => {
+            state.isLoggedIn = action.payload.isLoggedIn
         }
-        default:
-            return state
     }
-}
+})
+
+export const authReducer = authSlice.reducer
+export const {setIsLoggedIn} = authSlice.actions
