@@ -19,13 +19,13 @@ const initialState = {
 // } as const)
 
 export const logInTC = (data: LoginParamsType) => (dispatch: Dispatch<AuthReducerActionsType>) => {
-    dispatch(setStatusAC('loading'))
+    dispatch(setStatusAC({status: 'loading'}))
     authAPI.logIn(data)
         .then(
             response => {
                 if (response.resultCode === 0) {
                     dispatch(setIsLoggedIn({isLoggedIn: true}))
-                    dispatch(setStatusAC('succeeded'))
+                    dispatch(setStatusAC({status: 'succeeded'}))
                 } else {
                     handleServerAppError(response, dispatch)
                 }
@@ -35,12 +35,12 @@ export const logInTC = (data: LoginParamsType) => (dispatch: Dispatch<AuthReduce
 }
 
 export const logOutTC = () => (dispatch: Dispatch<AuthReducerActionsType>) => {
-    dispatch(setStatusAC('loading'))
+    dispatch(setStatusAC({status: 'loading'}))
     authAPI.logOut().then(
         response => {
             if (response.resultCode === 0) {
                 dispatch(setIsLoggedIn({isLoggedIn: false}))
-                dispatch(setStatusAC('succeeded'))
+                dispatch(setStatusAC({status: 'succeeded'}))
             } else {
                 handleServerAppError(response, dispatch)
             }
@@ -49,11 +49,11 @@ export const logOutTC = () => (dispatch: Dispatch<AuthReducerActionsType>) => {
 }
 
 export const appInitTC = () => (dispatch: Dispatch<AuthReducerActionsType>) => {
-    dispatch(setStatusAC('loading'))
+    dispatch(setStatusAC({status: 'loading'}))
     authAPI.authMe()
         .then(response => {
                 if (response.resultCode === 0) {
-                    dispatch(setStatusAC('succeeded'))
+                    dispatch(setStatusAC({status: 'succeeded'}))
                     dispatch(setIsLoggedIn({isLoggedIn: true}))
                 } else {
                     handleServerAppError(response, dispatch)
@@ -61,7 +61,7 @@ export const appInitTC = () => (dispatch: Dispatch<AuthReducerActionsType>) => {
             }
         )
         .catch(error => handleNetworkError(error, dispatch))
-        .finally(() => dispatch(setAppInitializedAC(true)))
+        .finally(() => dispatch(setAppInitializedAC({isInitialized: true})))
 }
 
 type SetIsLoggedInActionType = ReturnType<typeof setIsLoggedIn>
