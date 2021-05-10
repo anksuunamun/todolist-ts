@@ -16,13 +16,20 @@ import {appInitTC, logOutTC} from '../features/Login/auth-reducer';
 //     [todoListID: string]: Array<TaskType>
 // }
 
-function App() {
+type AppPropsType = {
+    demo?: boolean
+}
+
+function App({demo = false}: AppPropsType) {
     const dispatch = useDispatch();
     const status = useSelector<AppRootStateType, RequestStatusType>(state => state.app.status)
     const appInit = useSelector<AppRootStateType, boolean>(state => state.app.isInitialized)
     const isLoggedIn = useSelector<AppRootStateType, boolean>(state => state.auth.isLoggedIn);
 
     useEffect(() => {
+        if (demo) {
+            return
+        }
         dispatch(appInitTC())
     }, [])
 
@@ -71,7 +78,7 @@ function App() {
             {status === 'loading' && <LinearProgress color="secondary"/>}
             <Container fixed>
                 <Switch>
-                    <Route exact path={'/'} render={() => <TodolistsList/>}/>
+                    <Route exact path={'/'} render={() => <TodolistsList demo={demo}/>}/>
                     <Route path={'/login'} render={() => <Login/>}/>
                     <Route path={'/404'} render={() => <div>Error</div>}/>
                     <Redirect from={'*'} to={'/404'}/>

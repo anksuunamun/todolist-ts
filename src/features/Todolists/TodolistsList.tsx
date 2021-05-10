@@ -18,14 +18,20 @@ import {Todolist} from './Todolist/Todolist';
 import {Redirect} from 'react-router-dom';
 
 
-type TodolistsListPropsType = {}
-export const TodolistsList: React.FC<TodolistsListPropsType> = (props) => {
+type TodolistsListPropsType = {
+    demo?: boolean
+}
+export const TodolistsList: React.FC<TodolistsListPropsType> = ({demo = false}) => {
     let dispatch = useDispatch();
 
     const isLoggedIn = useSelector<AppRootStateType, boolean>(state => state.auth.isLoggedIn);
     useEffect(() => {
+        if (demo || !isLoggedIn) {
+            return;
+        }
         dispatch(getTodolistsTC());
     }, [dispatch])
+
     let todoLists = useSelector<AppRootStateType, Array<TodolistDomainType>>(state => state.todolists)
     let tasks = useSelector<AppRootStateType, TaskStateType>(state => state.tasks)
 
@@ -108,7 +114,8 @@ export const TodolistsList: React.FC<TodolistsListPropsType> = (props) => {
                                     entityStatus={todoList.entityStatus}
                                     removeTodoList={removeTodoList}
                                     changeTaskTitle={changeTaskTitle}
-                                    changeTodoListTitle={changeTodoListTitle}/>
+                                    changeTodoListTitle={changeTodoListTitle}
+                                    demo={demo}/>
                             </Paper>
                         </Grid>
                     )

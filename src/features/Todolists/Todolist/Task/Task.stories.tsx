@@ -29,7 +29,7 @@ TaskIsDoneExample.args = {
     ...baseArg,
     task: {
         title: 'HTML and CSS', id: v1(), description: '',
-        todoListId: 'todolistId1', order: 0, status: TaskStatuses.New,
+        todoListId: 'todolistId1', order: 0, status: TaskStatuses.Completed,
         priority: TaskPriorities.Low, startDate: '', deadline: '', addedDate: '',
         entityStatus: 'idle'
     },

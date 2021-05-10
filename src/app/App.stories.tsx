@@ -4,16 +4,17 @@ import {Story, Meta} from '@storybook/react/types-6-0';
 
 import {action} from '@storybook/addon-actions';
 import App from './App';
-import {ReduxStoreProviderDecorator} from '../stories/decorators/ReduxStoreProviderDecorator';
+import {HashRouterDecorator, ReduxStoreProviderDecorator} from '../stories/decorators/ReduxStoreProviderDecorator';
+import StoryRouter from 'storybook-react-router';
 
 export default {
     title: 'Components/App',
     component: App,
     argTypes: {},
-    decorators: [ReduxStoreProviderDecorator]
+    decorators: [ReduxStoreProviderDecorator, HashRouterDecorator]
 } as Meta;
 
-const Template: Story = (args) => <App {...args} />;
+const Template: Story = (args) => <App {...args} demo={true} />;
 
 export const AppExample = Template.bind({});
 
