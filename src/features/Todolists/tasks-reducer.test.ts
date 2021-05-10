@@ -10,41 +10,41 @@ beforeEach(() => {
             {
                 id: '1', title: 'CSS', status: 0, deadline: '',
                 startDate: '', priority: 0, description: '',
-                addedDate: '', order: 0, todoListId: 'todolistId1'
+                addedDate: '', order: 0, todoListId: 'todolistId1', entityStatus: 'idle'
             },
             {
                 id: '2', title: 'JS', status: 0, deadline: '',
                 startDate: '', priority: 0, description: '',
-                addedDate: '', order: 0, todoListId: 'todolistId1'
+                addedDate: '', order: 0, todoListId: 'todolistId1', entityStatus: 'idle'
             },
             {
                 id: '3', title: 'React', status: 0, deadline: '',
                 startDate: '', priority: 0, description: '',
-                addedDate: '', order: 0, todoListId: 'todolistId1'
+                addedDate: '', order: 0, todoListId: 'todolistId1', entityStatus: 'idle'
             }
         ],
         'todolistId2': [
             {
                 id: '1', title: 'bread', status: 0, deadline: '',
                 startDate: '', priority: 0, description: '',
-                addedDate: '', order: 0, todoListId: 'todolistId2'
+                addedDate: '', order: 0, todoListId: 'todolistId2', entityStatus: 'idle'
             },
             {
                 id: '2', title: 'milk', status: 0, deadline: '',
                 startDate: '', priority: 0, description: '',
-                addedDate: '', order: 0, todoListId: 'todolistId2'
+                addedDate: '', order: 0, todoListId: 'todolistId2', entityStatus: 'idle'
             },
             {
                 id: '3', title: 'tea', status: 0, deadline: '',
                 startDate: '', priority: 0, description: '',
-                addedDate: '', order: 0, todoListId: 'todolistId2'
+                addedDate: '', order: 0, todoListId: 'todolistId2', entityStatus: 'idle'
             }
         ]
     };
 })
 
 test('correct task should be deleted from correct array', () => {
-    const action = removeTaskAC('2', 'todolistId2');
+    const action = removeTaskAC({taskId: '2', todoListId: 'todolistId2'});
 
     const endState = tasksReducer(startState, action)
 
@@ -53,29 +53,29 @@ test('correct task should be deleted from correct array', () => {
             {
                 id: '1', title: 'CSS', status: 0, deadline: '',
                 startDate: '', priority: 0, description: '',
-                addedDate: '', order: 0, todoListId: 'todolistId1'
+                addedDate: '', order: 0, todoListId: 'todolistId1', entityStatus: 'idle'
             },
             {
                 id: '2', title: 'JS', status: 0, deadline: '',
                 startDate: '', priority: 0, description: '',
-                addedDate: '', order: 0, todoListId: 'todolistId1'
+                addedDate: '', order: 0, todoListId: 'todolistId1', entityStatus: 'idle'
             },
             {
                 id: '3', title: 'React', status: 0, deadline: '',
                 startDate: '', priority: 0, description: '',
-                addedDate: '', order: 0, todoListId: 'todolistId1'
+                addedDate: '', order: 0, todoListId: 'todolistId1', entityStatus: 'idle'
             }
         ],
         'todolistId2': [
             {
                 id: '1', title: 'bread', status: 0, deadline: '',
                 startDate: '', priority: 0, description: '',
-                addedDate: '', order: 0, todoListId: 'todolistId2'
+                addedDate: '', order: 0, todoListId: 'todolistId2', entityStatus: 'idle'
             },
             {
                 id: '3', title: 'tea', status: 0, deadline: '',
                 startDate: '', priority: 0, description: '',
-                addedDate: '', order: 0, todoListId: 'todolistId2'
+                addedDate: '', order: 0, todoListId: 'todolistId2', entityStatus: 'idle'
             }
         ]
     });
@@ -91,9 +91,11 @@ test('correct task should be deleted from correct array', () => {
 
 test('correct task should be added to correct array', () => {
     const action = addTaskAC({
-        id: '4', title: 'lemon', status: 0, deadline: '',
-        startDate: '', priority: 0, description: '',
-        addedDate: '', order: 0, todoListId: 'todolistId2'
+        task: {
+            id: '4', title: 'lemon', status: 0, deadline: '',
+            startDate: '', priority: 0, description: '',
+            addedDate: '', order: 0, todoListId: 'todolistId2', entityStatus: 'idle'
+        }
     });
 
     const endState = tasksReducer(startState, action)
@@ -106,7 +108,7 @@ test('correct task should be added to correct array', () => {
 })
 
 test('status of specified task should be changed', () => {
-    const action = updateTaskAC('2', {status: TaskStatuses.Completed}, 'todolistId2');
+    const action = updateTaskAC({id: '2', domainModel: {status: TaskStatuses.Completed}, todolistId: 'todolistId2'});
 
     const endState = tasksReducer(startState, action)
 
@@ -116,7 +118,7 @@ test('status of specified task should be changed', () => {
 
 
 test('title of specified task should be changed', () => {
-    const action = updateTaskAC('2', {title: 'beer'}, 'todolistId2');
+    const action = updateTaskAC({id: '2', domainModel: {title: 'beer'}, todolistId: 'todolistId2'});
 
     const endState = tasksReducer(startState, action)
 
@@ -125,7 +127,7 @@ test('title of specified task should be changed', () => {
 });
 
 test('new array should be added when new todolist is added', () => {
-    const action = AddTodoListAC({title: 'new todolist', addedDate: '', order: 0, id: 'newId'});
+    const action = AddTodoListAC({todolist: {title: 'new todolist', addedDate: '', order: 0, id: 'newId'}});
 
     const endState = tasksReducer(startState, action)
 
@@ -141,7 +143,7 @@ test('new array should be added when new todolist is added', () => {
 });
 
 test('property with todolistId should be deleted', () => {
-    const action = RemoveTodoListAC('todolistId2');
+    const action = RemoveTodoListAC({todolistId: 'todolistId2'});
 
     const endState = tasksReducer(startState, action)
 
