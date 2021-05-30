@@ -1,4 +1,27 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# To-do list
+## Description
+
+This project is a single page application, which provides possibilities of standard to-do list application.
+
+It was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+
+## Application features
+
+ After entering the password and login on the authorization page and after confirmation from the server, you can use application as an authorized user.
+
+List of features:
+
+* creating a to-do list;
+* adding tasks in to-do list;
+* changing tasks' statuses on complete/incomplete;
+* editing tasks' and to-do lists' descriptions;
+* deleting tasks and to-do lists;
+* possibility to show only completed/active tasks or all of them.
+
+During processing of some operations (for example, add / delete / edit), some buttons and actions may not be available.
+
+
+
 
 ## Available Scripts
 
